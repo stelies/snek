@@ -122,16 +122,13 @@
     Accent: #F59E0B (Vibrant Amber)
     Background: #F8FAFC (Clean Slate)
     
-    NO MERMAID JS USED.
-    NO SVG GRAPHICS USED.
-    
     Narrative Plan:
     1. Introduction/Hook (Existing)
     2. Philosophy & Design (Python vs Snek) -> Radar Chart
-    3. I/O Evolution (Python vs Snek) -> Bar Chart (Verbosity)
-    4. Snek Internal Evolution (v2.0-1 vs v2.0-7) -> Stacked Bar Chart (Feature Completion)
-    5. Logic & Syntax (Python vs Snek) -> Code Blocks + Cognitive Load Chart
-    6. Installation Guide (Snek Implementation) -> HTML/CSS Process Flow Diagram
+    3. Snek Version History & Evolution (v2.0-1 vs v2.0-7) -> Text Comparison + Stacked Bar Chart (Feature Completion) (NEW)
+    4. I/O Evolution (Python vs Snek) -> Bar Chart (Verbosity) (MOVED)
+    5. Logic & Syntax (Python vs Snek) -> Code Blocks + Cognitive Load Chart (MOVED)
+    6. Installation Guide (Snek Implementation) -> HTML/CSS Process Flow Diagram (UPDATED)
     -->
 </head>
 <body class="antialiased">
@@ -140,14 +137,13 @@
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <!-- UPDATED LOGO: Changed from 'S' to the Snake Emoji 🐍 -->
                 <div class="w-10 h-10 flex items-center justify-center text-3xl">🐍</div>
                 <h1 class="text-2xl font-bold tracking-tight text-slate-800">Snek <span class="text-slate-400">vs</span> Python</h1>
             </div>
             <nav class="hidden md:flex space-x-8">
                 <a href="#philosophy" class="text-slate-600 hover:text-emerald-600 font-medium transition">Philosophy</a>
+                <a href="#snek-evolution-detail" class="text-slate-600 hover:text-emerald-600 font-medium transition">Snek Evolution</a>
                 <a href="#io-evolution" class="text-slate-600 hover:text-emerald-600 font-medium transition">I/O Revolution</a>
-                <a href="#snek-evolution" class="text-slate-600 hover:text-emerald-600 font-medium transition">Snek's Growth</a>
                 <a href="#installation-guide" class="text-slate-600 hover:text-emerald-600 font-medium transition">Installation</a>
             </nav>
         </div>
@@ -195,7 +191,76 @@
             </div>
         </section>
 
-        <!-- SECTION 2: I/O Evolution -->
+        <!-- SECTION 2 (NEW): Snek Version History & Evolution (Previously Section 3) -->
+        <section id="snek-evolution-detail">
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-amber-600 uppercase bg-amber-100 rounded-full">
+                    Snek Internal Growth
+                </div>
+                <h3 class="text-3xl font-extrabold text-slate-800 mb-4">Snek v2.0-1: Simple Prototype to v2.0-7: Robust Interpreter</h3>
+                <p class="text-slate-600">
+                    While Snek v2.0-1 provided basic variable and logic handling, v2.0-7 represents a stabilization and feature completion milestone. The later version introduced conversational logic operators and crucial error recovery to handle unexpected input gracefully.
+                </p>
+            </div>
+
+            <!-- Syntax Comparison Grid (v2.0-1 vs v2.0-7) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- V2.0-1 Card -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-amber-500">
+                    <h4 class="text-xl font-bold text-amber-600 mb-2">Snek v2.0-1 (Prototype)</h4>
+                    <p class="text-sm text-slate-500 mb-4 uppercase tracking-wide font-bold">Simple Logic & Assignment</p>
+                    <div class="bg-slate-800 rounded-lg p-4 font-mono text-sm text-amber-200 overflow-x-auto h-32">
+                        <code class="block">
+                            <span class="text-purple-400">let</span> score <span class="text-purple-400">be</span> 0<br>
+                            <span class="text-purple-400">if</span> score <span class="text-yellow-300">is over</span> 10 <span class="text-purple-400">then</span><br>
+                            &nbsp;&nbsp;print "Win"<br>
+                            <span class="text-purple-400">end;</span>
+                        </code>
+                    </div>
+                    <ul class="text-sm text-slate-600 space-y-2 mt-4">
+                        <li>Basic keywords (e.g., `is over`).</li>
+                        <li>Limited variable assignment.</li>
+                        <li>No custom output styling.</li>
+                    </ul>
+                </div>
+                
+                <!-- Arrow/Divider -->
+                <div class="flex items-center justify-center text-4xl text-slate-400 hidden md:block">
+                    &rarr;
+                </div>
+                
+                <!-- V2.0-7 Card -->
+                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-500 md:col-span-1">
+                    <h4 class="text-xl font-bold text-emerald-600 mb-2">Snek v2.0-7 (Stable)</h4>
+                    <p class="text-sm text-slate-500 mb-4 uppercase tracking-wide font-bold">Full Conversational Capability</p>
+                    <div class="bg-slate-800 rounded-lg p-4 font-mono text-sm text-emerald-200 overflow-x-auto h-32">
+                        <code class="block">
+                            <span class="text-purple-400">let</span> score <span class="text-purple-400">be</span> <span class="text-yellow-300">number</span> 0<br>
+                            <span class="text-purple-400">if</span> score <span class="text-yellow-300">is greater than</span> 10 <span class="text-purple-400">then</span><br>
+                            &nbsp;&nbsp;<span class="text-purple-400">print,color=green</span> "Victory"<br>
+                            <span class="text-purple-400">end;</span>
+                        </code>
+                    </div>
+                    <ul class="text-sm text-slate-600 space-y-2 mt-4">
+                        <li>Full, multi-word operators (e.g., `is greater than`).</li>
+                        <li>Type-specific assignment (`number`).</li>
+                        <li>Native support for custom text color.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Visualization: Stacked Bar Chart (Feature Completion) -->
+            <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
+                <h4 class="text-lg font-semibold text-center mb-6 text-slate-700">Feature Completion Status by Version</h4>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="snekEvolutionChart"></canvas>
+                </div>
+                <p class="text-center text-sm text-slate-400 mt-4">The v2.0-7 release finished crucial features like complex error recovery and enabling custom color text, which were absent or incomplete in v2.0-1.</p>
+            </div>
+        </section>
+
+
+        <!-- SECTION 3: I/O Evolution (Now Section 4) -->
         <section id="io-evolution" class="bg-slate-50 rounded-3xl p-8 md:p-12">
             <div class="max-w-4xl mx-auto text-center mb-12">
                 <h3 class="text-3xl font-extrabold text-slate-800 mb-4">The Input/Output Revolution</h3>
@@ -260,30 +325,8 @@
             </div>
         </section>
         
-        <!-- SECTION 3 (NEW): Snek Internal Evolution -->
-        <section id="snek-evolution">
-            <div class="max-w-4xl mx-auto text-center mb-12">
-                <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-amber-600 uppercase bg-amber-100 rounded-full">
-                    Snek Internal Growth
-                </div>
-                <h3 class="text-3xl font-extrabold text-slate-800 mb-4">Evolution of Conversational Features (v2.0-1 to v2.0-7)</h3>
-                <p class="text-slate-600">
-                    Snek v2.0-1 introduced basic logic and variables, but the v2.0-7 release represents a major stabilization and feature completion milestone. The focus shifted from mere interpretation to robust error handling and advanced data structures.
-                </p>
-            </div>
 
-            <!-- Visualization: Stacked Bar Chart (Feature Completion) -->
-            <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
-                <h4 class="text-lg font-semibold text-center mb-6 text-slate-700">Feature Completion Status by Version</h4>
-                <div class="chart-container" style="height: 300px;">
-                    <canvas id="snekEvolutionChart"></canvas>
-                </div>
-                <p class="text-center text-sm text-slate-400 mt-4">The v2.0-7 release finished crucial features like complex error recovery and enabling custom color text, which were absent or incomplete in v2.0-1.</p>
-            </div>
-        </section>
-
-
-        <!-- SECTION 4: Logic & Syntax -->
+        <!-- SECTION 4: Logic & Syntax (Now Section 5) -->
         <section id="logic-syntax">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 
@@ -360,47 +403,42 @@
             </div>
         </section>
         
-        <!-- SECTION 5 (NEW): Installation Guide -->
+        <!-- SECTION 5: Installation Guide (UPDATED) -->
         <section id="installation-guide" class="bg-slate-50 rounded-3xl p-8 md:p-12">
             <div class="max-w-4xl mx-auto text-center mb-12">
-                <h3 class="text-3xl font-extrabold text-slate-800 mb-4">Seamless Integration: Installing Snek into any Python Environment</h3>
+                <h3 class="text-3xl font-extrabold text-slate-800 mb-4">Embedded Integration: The Snek Drop-in Method</h3>
                 <p class="text-slate-600">
-                    Snek's design as an interpreter layer ensures maximum portability. It requires only standard Python dependencies and can be installed into any active Python virtual environment or directory via a simple package manager command.
+                    Snek is designed to co-exist directly within your Python projects. It functions as a library, eliminating the need for separate installation environments or OS-level commands. This method allows you to execute Snek code blocks from within standard Python scripts.
                 </p>
             </div>
 
-            <!-- Process Flow Diagram (HTML/CSS ONLY) -->
+            <!-- Process Flow Diagram (HTML/CSS ONLY) - UPDATED STEPS -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-0 relative">
                 
                 <div class="flow-step bg-white rounded-xl shadow-lg" data-step="1">
-                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Ensure Python Setup</h5>
-                    <p class="text-sm text-slate-600">Verify Python 3.8+ is installed. Activate your project's virtual environment (recommended practice).</p>
-                    <code class="block mt-3 p-2 bg-slate-800 text-emerald-300 rounded text-xs font-mono">
-                        python --version
-                    </code>
+                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Obtain Snek.py</h5>
+                    <p class="text-sm text-slate-600">Download the core interpreter file, <code class="font-mono">snek.py</code>, from the official source (or copy it locally).</p>
                 </div>
 
                 <div class="flow-step bg-white rounded-xl shadow-lg lg:ml-12" data-step="2">
-                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Install Snek via PIP</h5>
-                    <p class="text-sm text-slate-600">Use the Python package installer to fetch the latest Snek release (v2.0-7).</p>
-                    <code class="block mt-3 p-2 bg-slate-800 text-emerald-300 rounded text-xs font-mono">
-                        pip install snek-lang
-                    </code>
+                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Place in Project Root</h5>
+                    <p class="text-sm text-slate-600">Place <code class="font-mono">snek.py</code> directly into the folder containing your primary Python scripts.</p>
                 </div>
                 
                 <div class="flow-step bg-white rounded-xl shadow-lg lg:ml-12" data-step="3">
-                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Create a Snek File</h5>
-                    <p class="text-sm text-slate-600">Create a file with the custom extension (e.g., <code class="font-mono">script.snek</code>) in your working directory.</p>
+                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Import into Python</h5>
+                    <p class="text-sm text-slate-600">Start your Python script with a simple import statement.</p>
                     <code class="block mt-3 p-2 bg-slate-800 text-emerald-300 rounded text-xs font-mono">
-                        touch script.snek
+                        <span class="text-pink-400">import</span> snek
                     </code>
                 </div>
 
                 <div class="flow-step bg-white rounded-xl shadow-lg lg:ml-12" data-step="4">
-                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Execute the Script</h5>
-                    <p class="text-sm text-slate-600">Run the file using the Snek interpreter, which processes it through the Python core.</p>
+                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Execute Snek Code</h5>
+                    <p class="text-sm text-slate-600">Use the <code class="font-mono">snek.run()</code> function to execute Snek code directly within your Python script.</p>
                     <code class="block mt-3 p-2 bg-slate-800 text-emerald-300 rounded text-xs font-mono">
-                        snek script.snek
+                        program = <span class="text-green-300">"print Hello"</span><br>
+                        snek.run(program)
                     </code>
                 </div>
             </div>
