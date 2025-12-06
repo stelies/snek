@@ -145,6 +145,60 @@
             position: relative;
             z-index: 10;
         }
+
+        /* macOS Window Controls */
+        .mac-window {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+        }
+
+        .mac-titlebar {
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mac-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .mac-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .mac-close { background-color: #ff5f56; }
+        .mac-minimize { background-color: #ffbd2e; }
+        .mac-maximize { background-color: #27ca3f; }
+
+        .mac-content {
+            padding: 16px;
+            background: white;
+        }
+
+        /* Fix for code display */
+        code {
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            background-color: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #374151;
+            font-size: 0.9em;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: inherit;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -204,23 +258,43 @@
                 <h2 class="text-3xl font-bold mb-12 text-center text-[#1F2937]">Design Philosophy: Narrative vs. Efficiency</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     
-                    <div class="bg-white p-8 rounded-3xl mac-shadow border border-gray-100">
-                        <h3 class="text-xl font-bold mb-6 text-center text-[#1F2937]">Metric Distribution Radar</h3>
-                        <div class="chart-container">
-                            <canvas id="radarChart"></canvas>
+                    <div class="mac-window mac-shadow">
+                        <div class="mac-titlebar">
+                            <div class="mac-controls">
+                                <span class="mac-control mac-close"></span>
+                                <span class="mac-control mac-minimize"></span>
+                                <span class="mac-control mac-maximize"></span>
+                            </div>
+                            <span class="text-xs text-gray-600 ml-2 font-medium">philosophy_chart.js</span>
+                        </div>
+                        <div class="mac-content p-6">
+                            <h3 class="text-xl font-bold mb-6 text-center text-[#1F2937]">Metric Distribution Radar</h3>
+                            <div class="chart-container">
+                                <canvas id="radarChart"></canvas>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="p-6 bg-gray-50 rounded-xl mac-shadow border border-gray-200">
-                        <h3 class="text-2xl font-semibold mb-4 text-[#1F2937] border-l-4 border-[#00D26A] pl-4">The Conversational Mandate</h3>
-                        <p class="text-gray-600 text-lg mb-6 leading-relaxed">
-                            The core difference lies in the balance of <strong class="text-[#00D26A]">Narrative Flow</strong> (snek) and <strong class="text-[#4B8BBE]">Raw Power</strong> (Python). Python 3.14 sacrifices conversational readability for concise, symbolic efficiency, relying on terse operators and implied structure like indentation.
-                        </p>
-                        <p class="text-gray-600 text-lg leading-relaxed">
-                            snek v2.2, by contrast, prioritizes low cognitive overhead for new users through explicit, English-like constructs (`is greater than`, `end;`). This focus makes the final v2.2 specification exceptionally easy to read, but naturally limits its performance ceiling compared to the C-based Python VM, making it ideal for scripting and educational use.
-                        </p>
-                        <div class="mt-6 p-4 bg-white rounded-lg border border-gray-100">
-                            <p class="text-sm font-medium text-gray-700">⭐ Key Takeaway: snek v2.2 achieves maximum <strong>Simplicity</strong> and <strong>Narrative Flow</strong>, while Python 3.14 achieves maximum <strong>Raw Power</strong> and <strong>Scalability.</strong></p>
+                    <div class="mac-window mac-shadow">
+                        <div class="mac-titlebar">
+                            <div class="mac-controls">
+                                <span class="mac-control mac-close"></span>
+                                <span class="mac-control mac-minimize"></span>
+                                <span class="mac-control mac-maximize"></span>
+                            </div>
+                            <span class="text-xs text-gray-600 ml-2 font-medium">analysis.txt</span>
+                        </div>
+                        <div class="mac-content p-6">
+                            <h3 class="text-2xl font-semibold mb-4 text-[#1F2937] border-l-4 border-[#00D26A] pl-4">The Conversational Mandate</h3>
+                            <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                                The core difference lies in the balance of <strong class="text-[#00D26A]">Narrative Flow</strong> (snek) and <strong class="text-[#4B8BBE]">Raw Power</strong> (Python). Python 3.14 sacrifices conversational readability for concise, symbolic efficiency, relying on terse operators and implied structure like indentation.
+                            </p>
+                            <p class="text-gray-600 text-lg leading-relaxed">
+                                snek v2.2, by contrast, prioritizes low cognitive overhead for new users through explicit, English-like constructs (<code>is greater than</code>, <code>end;</code>). This focus makes the final v2.2 specification exceptionally easy to read, but naturally limits its performance ceiling compared to the C-based Python VM, making it ideal for scripting and educational use.
+                            </p>
+                            <div class="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-100">
+                                <p class="text-sm font-medium text-gray-700">⭐ Key Takeaway: snek v2.2 achieves maximum <strong>Simplicity</strong> and <strong>Narrative Flow</strong>, while Python 3.14 achieves maximum <strong>Raw Power</strong> and <strong>Scalability.</strong></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -235,197 +309,330 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <!-- V1 Card -->
-                    <div class="bg-white p-6 rounded-3xl mac-shadow border-t-4 border-red-400 relative timeline-connect">
-                        <h3 class="text-xl font-bold text-red-600 mb-2">snek v1.0</h3>
-                        <p class="text-gray-500 text-sm mb-4">Unstructured PoC</p>
-                        <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
-                            <li><strong class="font-semibold">Flow:</strong> Pure `goto` and `label` for flow control.</li>
-                            <li><strong class="font-semibold">Data:</strong> Scalar variables and simple numeric types only.</li>
-                            <li><strong class="font-semibold">Risk:</strong> High maintenance complexity; spaghetti code prone.</li>
-                        </ul>
+                    <div class="mac-window mac-shadow border-t-4 border-red-400 relative timeline-connect">
+                        <div class="mac-titlebar">
+                            <div class="mac-controls">
+                                <span class="mac-control mac-close"></span>
+                                <span class="mac-control mac-minimize"></span>
+                                <span class="mac-control mac-maximize"></span>
+                            </div>
+                            <span class="text-xs text-gray-600 ml-2 font-medium">v1_spec.md</span>
+                        </div>
+                        <div class="mac-content">
+                            <h3 class="text-xl font-bold text-red-600 mb-2">snek v1.0</h3>
+                            <p class="text-gray-500 text-sm mb-4">Unstructured PoC</p>
+                            <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                                <li><strong class="font-semibold">Flow:</strong> Pure <code>goto</code> and <code>label</code> for flow control.</li>
+                                <li><strong class="font-semibold">Data:</strong> Scalar variables and simple numeric types only.</li>
+                                <li><strong class="font-semibold">Risk:</strong> High maintenance complexity; spaghetti code prone.</li>
+                            </ul>
+                        </div>
                     </div>
 
                     <!-- V2.0-7 Card -->
-                    <div class="bg-white p-6 rounded-3xl mac-shadow border-t-4 border-yellow-400 relative timeline-connect">
-                        <h3 class="text-xl font-bold text-yellow-600 mt-2 mb-2">snek v2.0-7</h3>
-                        <div class="text-xs font-medium text-gray-400 mb-4">Intro to Blocks & Loops</div>
-                        <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
-                            <li><strong class="font-semibold">Flow:</strong> Introduced basic `do...end` loop structures.</li>
-                            <li><strong class="font-semibold">Deficit:</strong> Still lacked Lists or formal Function definitions.</li>
-                            <li><strong class="font-semibold">Syntax:</strong> Conversational operators like `is greater than` emerge.</li>
-                        </ul>
+                    <div class="mac-window mac-shadow border-t-4 border-yellow-400 relative timeline-connect">
+                        <div class="mac-titlebar">
+                            <div class="mac-controls">
+                                <span class="mac-control mac-close"></span>
+                                <span class="mac-control mac-minimize"></span>
+                                <span class="mac-control mac-maximize"></span>
+                            </div>
+                            <span class="text-xs text-gray-600 ml-2 font-medium">v2_transition.md</span>
+                        </div>
+                        <div class="mac-content">
+                            <h3 class="text-xl font-bold text-yellow-600 mt-2 mb-2">snek v2.0-7</h3>
+                            <div class="text-xs font-medium text-gray-400 mb-4">Intro to Blocks & Loops</div>
+                            <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                                <li><strong class="font-semibold">Flow:</strong> Introduced basic <code>do...end</code> loop structures.</li>
+                                <li><strong class="font-semibold">Deficit:</strong> Still lacked Lists or formal Function definitions.</li>
+                                <li><strong class="font-semibold">Syntax:</strong> Conversational operators like <code>is greater than</code> emerge.</li>
+                            </ul>
+                        </div>
                     </div>
 
                     <!-- V2.2 Card (Highlight) -->
-                    <div class="bg-white p-6 rounded-3xl shadow-xl border-t-4 border-[#00D26A] transform scale-105 relative timeline-connect ring-2 ring-[#00D26A]/20">
-                        <h3 class="text-xl font-bold text-[#00D26A] mt-2 mb-2">snek v2.2</h3>
-                        <p class="text-[#00D26A] text-sm font-bold mb-4">Complete & Structured</p>
-                        <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside font-medium">
-                            <li><strong class="font-semibold">Flow:</strong> Full `define` and `call` support for structured subroutines.</li>
-                            <li><strong class="font-semibold">Data:</strong> Native List and advanced data structure support added.</li>
-                            <li><strong class="font-semibold">Standard:</strong> Unified `end;` statement for clear block termination.</li>
-                        </ul>
+                    <div class="mac-window shadow-xl border-t-4 border-[#00D26A] transform scale-105 relative timeline-connect ring-2 ring-[#00D26A]/20">
+                        <div class="mac-titlebar">
+                            <div class="mac-controls">
+                                <span class="mac-control mac-close"></span>
+                                <span class="mac-control mac-minimize"></span>
+                                <span class="mac-control mac-maximize"></span>
+                            </div>
+                            <span class="text-xs text-gray-600 ml-2 font-medium">v2.2_final_spec.md</span>
+                        </div>
+                        <div class="mac-content">
+                            <h3 class="text-xl font-bold text-[#00D26A] mt-2 mb-2">snek v2.2</h3>
+                            <p class="text-[#00D26A] text-sm font-bold mb-4">Complete & Structured</p>
+                            <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside font-medium">
+                                <li><strong class="font-semibold">Flow:</strong> Full <code>define</code> and <code>call</code> support for structured subroutines.</li>
+                                <li><strong class="font-semibold">Data:</strong> Native List and advanced data structure support added.</li>
+                                <li><strong class="font-semibold">Standard:</strong> Unified <code>end;</code> statement for clear block termination.</li>
+                            </ul>
+                        </div>
                     </div>
 
                     <!-- Python Card -->
-                    <div class="bg-white p-6 rounded-3xl mac-shadow border-t-4 border-[#4B8BBE]">
-                        <h3 class="text-xl font-bold text-[#4B8BBE] mt-2 mb-2">Python 3.14</h3>
-                        <p class="text-gray-500 text-sm mb-4">The Modern Standard</p>
-                        <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
-                            <li><strong class="font-semibold">Flow:</strong> Full Classes, Modules, and Functions system.</li>
-                            <li><strong class="font-semibold">Data:</strong> Full primitive and complex structure support.</li>
-                            <li><strong class="font-semibold">Model:</strong> CPython VM (Bytecode) for high performance.</li>
-                        </ul>
+                    <div class="mac-window mac-shadow border-t-4 border-[#4B8BBE]">
+                        <div class="mac-titlebar">
+                            <div class="mac-controls">
+                                <span class="mac-control mac-close"></span>
+                                <span class="mac-control mac-minimize"></span>
+                                <span class="mac-control mac-maximize"></span>
+                            </div>
+                            <span class="text-xs text-gray-600 ml-2 font-medium">python_3.14.md</span>
+                        </div>
+                        <div class="mac-content">
+                            <h3 class="text-xl font-bold text-[#4B8BBE] mt-2 mb-2">Python 3.14</h3>
+                            <p class="text-gray-500 text-sm mb-4">The Modern Standard</p>
+                            <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                                <li><strong class="font-semibold">Flow:</strong> Full Classes, Modules, and Functions system.</li>
+                                <li><strong class="font-semibold">Data:</strong> Full primitive and complex structure support.</li>
+                                <li><strong class="font-semibold">Model:</strong> CPython VM (Bytecode) for high performance.</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- 3. DETAILED SYNTAX COMPARISON (Code Examples) -->
-            <section id="syntax" class="bg-white rounded-3xl p-10 mac-shadow border border-gray-100">
-                <h2 class="text-3xl font-bold mb-10 text-center text-[#1F2937]">Syntax Deep Dive: Looping and Control</h2>
-                <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
-                    The implementation of a simple counting loop showcases the primary syntactical differences, particularly in flow control and block definition. Note the clear, explicit language of snek v2.2 versus the terse, symbolic nature of Python.
-                </p>
+            <section id="syntax">
+                <div class="mac-window mac-shadow">
+                    <div class="mac-titlebar">
+                        <div class="mac-controls">
+                            <span class="mac-control mac-close"></span>
+                            <span class="mac-control mac-minimize"></span>
+                            <span class="mac-control mac-maximize"></span>
+                        </div>
+                        <span class="text-xs text-gray-600 ml-2 font-medium">syntax_comparison.analysis</span>
+                    </div>
+                    <div class="mac-content p-8">
+                        <h2 class="text-3xl font-bold mb-10 text-center text-[#1F2937]">Syntax Deep Dive: Looping and Control</h2>
+                        <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
+                            The implementation of a simple counting loop showcases the primary syntactical differences, particularly in flow control and block definition. Note the clear, explicit language of snek v2.2 versus the terse, symbolic nature of Python.
+                        </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:grid-cols-4">
-                    <!-- V1 Example -->
-                    <div class="bg-gray-50 p-4 rounded-xl border border-red-200 hover:border-red-400 transition duration-300">
-                        <h4 class="text-red-600 font-bold mb-2 text-sm">snek v1.0 (GOTO)</h4>
-                        <pre class="bg-gray-800 text-red-100 p-3 rounded-lg text-xs overflow-x-auto"><code>let count be 0
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:grid-cols-4">
+                            <!-- V1 Example -->
+                            <div class="mac-window border border-red-200 hover:border-red-400 transition duration-300">
+                                <div class="mac-titlebar bg-red-50">
+                                    <div class="mac-controls">
+                                        <span class="mac-control mac-close"></span>
+                                        <span class="mac-control mac-minimize"></span>
+                                        <span class="mac-control mac-maximize"></span>
+                                    </div>
+                                    <span class="text-xs text-red-600 ml-2 font-medium">v1_goto.snek</span>
+                                </div>
+                                <div class="mac-content p-4 bg-gray-800">
+                                    <pre class="text-red-100 p-2 rounded-lg text-xs overflow-x-auto"><code>let count be 0
 label start
 if count > 5 goto finish
 print count
 let count = count + 1
 goto start</code></pre>
-                    </div>
+                                </div>
+                            </div>
 
-                    <!-- V2.0-7 Example -->
-                    <div class="bg-gray-50 p-4 rounded-xl border border-yellow-200 hover:border-yellow-400 transition duration-300">
-                        <h4 class="text-yellow-600 font-bold mb-2 text-sm">snek v2.0-7 (Basic Block)</h4>
-                        <pre class="bg-gray-800 text-yellow-100 p-3 rounded-lg text-xs overflow-x-auto"><code>let count be number 0
+                            <!-- V2.0-7 Example -->
+                            <div class="mac-window border border-yellow-200 hover:border-yellow-400 transition duration-300">
+                                <div class="mac-titlebar bg-yellow-50">
+                                    <div class="mac-controls">
+                                        <span class="mac-control mac-close"></span>
+                                        <span class="mac-control mac-minimize"></span>
+                                        <span class="mac-control mac-maximize"></span>
+                                    </div>
+                                    <span class="text-xs text-yellow-600 ml-2 font-medium">v2_basic.snek</span>
+                                </div>
+                                <div class="mac-content p-4 bg-gray-800">
+                                    <pre class="text-yellow-100 p-2 rounded-lg text-xs overflow-x-auto"><code>let count be number 0
 repeat
   print count
   set count = count + 1
 until count is greater than 5</code></pre>
-                    </div>
+                                </div>
+                            </div>
 
-                    <!-- V2.2 Example (Highlight) -->
-                    <div class="bg-gray-100 p-4 rounded-xl border border-[#00D26A] ring-2 ring-[#00D26A]/20 hover:ring-[#00D26A]/80 transition duration-300">
-                        <h4 class="text-[#00D26A] font-bold mb-2 text-sm">snek v2.2 (Conversational Block)</h4>
-                        <pre class="bg-gray-800 text-[#00D26A] p-3 rounded-lg text-xs overflow-x-auto"><code>let count be number 0
+                            <!-- V2.2 Example (Highlight) -->
+                            <div class="mac-window border border-[#00D26A] ring-2 ring-[#00D26A]/20 hover:ring-[#00D26A]/80 transition duration-300">
+                                <div class="mac-titlebar bg-[#00D26A]/10">
+                                    <div class="mac-controls">
+                                        <span class="mac-control mac-close"></span>
+                                        <span class="mac-control mac-minimize"></span>
+                                        <span class="mac-control mac-maximize"></span>
+                                    </div>
+                                    <span class="text-xs text-[#00D26A] ml-2 font-medium">v2.2_conversational.snek</span>
+                                </div>
+                                <div class="mac-content p-4 bg-gray-800">
+                                    <pre class="text-[#00D26A] p-2 rounded-lg text-xs overflow-x-auto"><code>let count be number 0
 while count is less than 5 do
   print count
   set count = count + 1
 end;
 end;</code></pre>
-                    </div>
+                                </div>
+                            </div>
 
-                    <!-- Python Example -->
-                    <div class="bg-gray-50 p-4 rounded-xl border border-blue-200 hover:border-blue-400 transition duration-300">
-                        <h4 class="text-[#4B8BBE] font-bold mb-2 text-sm">Python 3.14 (Symbolic)</h4>
-                        <pre class="bg-gray-800 text-blue-200 p-3 rounded-lg text-xs overflow-x-auto"><code>count = 0
+                            <!-- Python Example -->
+                            <div class="mac-window border border-blue-200 hover:border-blue-400 transition duration-300">
+                                <div class="mac-titlebar bg-blue-50">
+                                    <div class="mac-controls">
+                                        <span class="mac-control mac-close"></span>
+                                        <span class="mac-control mac-minimize"></span>
+                                        <span class="mac-control mac-maximize"></span>
+                                    </div>
+                                    <span class="text-xs text-[#4B8BBE] ml-2 font-medium">python_loop.py</span>
+                                </div>
+                                <div class="mac-content p-4 bg-gray-800">
+                                    <pre class="text-blue-200 p-2 rounded-lg text-xs overflow-x-auto"><code>count = 0
 while count < 5:
     print(count)
     count += 1
 # Indentation based</code></pre>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- 4. FEATURE MATRIX HEATMAP (Plotly) -->
             <section id="metrics">
-                <h2 class="text-3xl font-bold mb-12 text-center text-[#1F2937]">Feature Saturation & Parity</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     
-                    <div class="lg:col-span-1 p-6 bg-white rounded-3xl mac-shadow border border-gray-100">
-                        <h3 class="text-xl font-semibold mb-4 text-[#1F2937] border-l-4 border-[#4B8BBE] pl-4">Key Feature Comparison</h3>
-                        <p class="text-gray-600 mb-6 text-sm">
-                            This matrix highlights native support for critical programming constructs. The scores reflect completeness (100% saturation) or a philosophical difference (e.g., Unified Exit).
-                        </p>
-                        <div class="space-y-3">
-                            <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
-                                <strong class="text-[#00D26A]">snek v2.2</strong> achieves 100% parity with Python on <strong class="font-semibold">Native Lists</strong> and <strong class="font-semibold">Structured Subroutines</strong>.
+                    <div class="mac-window mac-shadow">
+                        <div class="mac-titlebar">
+                            <div class="mac-controls">
+                                <span class="mac-control mac-close"></span>
+                                <span class="mac-control mac-minimize"></span>
+                                <span class="mac-control mac-maximize"></span>
                             </div>
-                            <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
-                                <strong class="text-[#4B8BBE]">Python 3.14</strong> scores low in <strong class="font-semibold">Unified Exit</strong> and <strong class="font-semibold">Explicit Typing</strong> because its design favors implicit, symbolic, or runtime-based equivalents.
-                            </div>
-                            <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
-                                The original <strong class="text-red-600">snek v1</strong> was critically deficient, lacking any form of list structure or block scoping.
+                            <span class="text-xs text-gray-600 ml-2 font-medium">feature_analysis.txt</span>
+                        </div>
+                        <div class="mac-content p-6">
+                            <h3 class="text-xl font-semibold mb-4 text-[#1F2937] border-l-4 border-[#4B8BBE] pl-4">Key Feature Comparison</h3>
+                            <p class="text-gray-600 mb-6 text-sm">
+                                This matrix highlights native support for critical programming constructs. The scores reflect completeness (100% saturation) or a philosophical difference (e.g., Unified Exit).
+                            </p>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
+                                    <strong class="text-[#00D26A]">snek v2.2</strong> achieves 100% parity with Python on <strong class="font-semibold">Native Lists</strong> and <strong class="font-semibold">Structured Subroutines</strong>.
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
+                                    <strong class="text-[#4B8BBE]">Python 3.14</strong> scores low in <strong class="font-semibold">Unified Exit</strong> and <strong class="font-semibold">Explicit Typing</strong> because its design favors implicit, symbolic, or runtime-based equivalents.
+                                </div>
+                                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
+                                    The original <strong class="text-red-600">snek v1</strong> was critically deficient, lacking any form of list structure or block scoping.
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="lg:col-span-2 bg-white p-6 rounded-3xl mac-shadow border border-gray-100">
-                        <div id="heatmap" style="width:100%;height:450px;"></div>
+                    <div class="lg:col-span-2 mac-window mac-shadow">
+                        <div class="mac-titlebar">
+                            <div class="mac-controls">
+                                <span class="mac-control mac-close"></span>
+                                <span class="mac-control mac-minimize"></span>
+                                <span class="mac-control mac-maximize"></span>
+                            </div>
+                            <span class="text-xs text-gray-600 ml-2 font-medium">heatmap.html</span>
+                        </div>
+                        <div class="mac-content p-6">
+                            <h2 class="text-3xl font-bold mb-6 text-center text-[#1F2937]">Feature Saturation & Parity</h2>
+                            <div id="heatmap" style="width:100%;height:450px;"></div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- 5. CAPABILITY BAR CHART -->
             <section>
-                <div class="bg-white p-8 rounded-3xl mac-shadow border border-gray-100 max-w-5xl mx-auto">
-                    <h3 class="text-2xl font-bold mb-6 text-center text-[#1F2937]">Performance & Cognitive Trade-offs</h3>
-                    <div class="chart-container">
-                        <canvas id="barChart"></canvas>
+                <div class="mac-window mac-shadow max-w-5xl mx-auto">
+                    <div class="mac-titlebar">
+                        <div class="mac-controls">
+                            <span class="mac-control mac-close"></span>
+                            <span class="mac-control mac-minimize"></span>
+                            <span class="mac-control mac-maximize"></span>
+                        </div>
+                        <span class="text-xs text-gray-600 ml-2 font-medium">capability_chart.js</span>
                     </div>
-                    <p class="text-center text-gray-500 text-sm mt-6">Scoring is based on implementation maturity and ease of use (10 = highest).</p>
+                    <div class="mac-content p-8">
+                        <h3 class="text-2xl font-bold mb-6 text-center text-[#1F2937]">Performance & Cognitive Trade-offs</h3>
+                        <div class="chart-container">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                        <p class="text-center text-gray-500 text-sm mt-6">Scoring is based on implementation maturity and ease of use (10 = highest).</p>
+                    </div>
                 </div>
             </section>
 
             <!-- 6. INSTALLATION GUIDE (Embedded Method) -->
-            <section id="install" class="bg-slate-900 text-white rounded-3xl p-12 mac-shadow relative overflow-hidden">
-                <h2 class="text-4xl font-bold mb-8 text-center relative z-10 text-white">Installation: The snek Drop-in Method</h2>
-                <p class="text-center text-slate-400 mb-12 max-w-3xl mx-auto relative z-10">
-                    snek is designed for embedded integration. It requires a Python host environment to run, acting as a language extension rather than a standalone executable like Python 3.14. This simplified setup contributes to its high "Ease of Installation" score.
-                </p>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
-                    
-                    <!-- Step List -->
-                    <div class="space-y-8">
-                        <div class="flex gap-4 items-start">
-                            <div class="flex-shrink-0 w-10 h-10 bg-[#00D26A] text-slate-900 rounded-full flex items-center justify-center font-bold text-lg mac-shadow">1</div>
-                            <div>
-                                <h4 class="text-xl font-bold mb-1">Prerequisite Check</h4>
-                                <p class="text-slate-400">Ensure a modern Python 3 interpreter (like 3.14) is installed on your system. This is the mandatory runtime host for snek scripts.</p>
-                            </div>
+            <section id="install">
+                <div class="mac-window mac-shadow relative overflow-hidden">
+                    <div class="mac-titlebar bg-slate-800">
+                        <div class="mac-controls">
+                            <span class="mac-control mac-close"></span>
+                            <span class="mac-control mac-minimize"></span>
+                            <span class="mac-control mac-maximize"></span>
                         </div>
-                        <div class="flex gap-4 items-start">
-                            <div class="flex-shrink-0 w-10 h-10 bg-[#4B8BBE] text-white rounded-full flex items-center justify-center font-bold text-lg mac-shadow">2</div>
-                            <div>
-                                <h4 class="text-xl font-bold mb-1">Embed the Interpreter</h4>
-                                <p class="text-slate-400">Place the core <code class="bg-slate-800 px-2 py-1 rounded text-[#00D26A]">snek.py</code> file directly into your Python project directory. No external package manager is required.</p>
-                            </div>
-                        </div>
-                        <div class="flex gap-4 items-start">
-                            <div class="flex-shrink-0 w-10 h-10 bg-white text-slate-900 rounded-full flex items-center justify-center font-bold text-lg mac-shadow">3</div>
-                            <div>
-                                <h4 class="text-xl font-bold mb-1">Execute via snek.run()</h4>
-                                <p class="text-slate-400">Import the file and pass your snek code as a string to the <code class="bg-slate-800 px-2 py-1 rounded text-white">snek.run()</code> function in your main Python script, making integration seamless.</p>
-                            </div>
-                        </div>
+                        <span class="text-xs text-slate-300 ml-2 font-medium">installation_guide.md</span>
                     </div>
+                    <div class="mac-content bg-slate-900 text-white p-12">
+                        <h2 class="text-4xl font-bold mb-8 text-center relative z-10 text-white">Installation: The snek Drop-in Method</h2>
+                        <p class="text-center text-slate-400 mb-12 max-w-3xl mx-auto relative z-10">
+                            snek is designed for embedded integration. It requires a Python host environment to run, acting as a language extension rather than a standalone executable like Python 3.14. This simplified setup contributes to its high "Ease of Installation" score.
+                        </p>
 
-                    <!-- Code Preview Window -->
-                    <div class="bg-gray-800 rounded-xl border border-slate-700 p-6 font-mono text-sm shadow-2xl">
-                        <div class="flex gap-2 mb-4 border-b border-gray-700 pb-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                            <span class="ml-auto text-xs text-slate-500">main.py (Host)</span>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+                            
+                            <!-- Step List -->
+                            <div class="space-y-8">
+                                <div class="flex gap-4 items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-[#00D26A] text-slate-900 rounded-full flex items-center justify-center font-bold text-lg mac-shadow">1</div>
+                                    <div>
+                                        <h4 class="text-xl font-bold mb-1">Prerequisite Check</h4>
+                                        <p class="text-slate-400">Ensure a modern Python 3 interpreter (like 3.14) is installed on your system. This is the mandatory runtime host for snek scripts.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-[#4B8BBE] text-white rounded-full flex items-center justify-center font-bold text-lg mac-shadow">2</div>
+                                    <div>
+                                        <h4 class="text-xl font-bold mb-1">Embed the Interpreter</h4>
+                                        <p class="text-slate-400">Place the core <code>snek.py</code> file directly into your Python project directory. No external package manager is required.</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-4 items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 bg-white text-slate-900 rounded-full flex items-center justify-center font-bold text-lg mac-shadow">3</div>
+                                    <div>
+                                        <h4 class="text-xl font-bold mb-1">Execute via snek.run()</h4>
+                                        <p class="text-slate-400">Import the file and pass your snek code as a string to the <code>snek.run()</code> function in your main Python script, making integration seamless.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Code Preview Window -->
+                            <div class="mac-window">
+                                <div class="mac-titlebar bg-gray-800">
+                                    <div class="mac-controls">
+                                        <span class="mac-control mac-close"></span>
+                                        <span class="mac-control mac-minimize"></span>
+                                        <span class="mac-control mac-maximize"></span>
+                                    </div>
+                                    <span class="text-xs text-slate-400 ml-2 font-medium">main.py (Host)</span>
+                                </div>
+                                <div class="mac-content bg-gray-900 p-6 font-mono text-sm">
+                                    <div class="text-blue-400">import</div> <div class="inline text-white">snek</div>
+                                    <br><br>
+                                    <div class="text-slate-400"># Define your snek v2.2 code</div>
+                                    <div class="text-white">snek_code = """</div>
+                                    <div class="text-[#00D26A] pl-4">let names be list [string "Alice", string "Bob"]</div>
+                                    <div class="text-[#00D26A] pl-4">call print_names</div>
+                                    <div class="text-[#00D26A] pl-4">end;</div>
+                                    <div class="text-white">"""</div>
+                                    <br>
+                                    <div class="text-slate-400"># Run the snek code within the Python host</div>
+                                    <div class="text-white">snek.run(snek_code)</div>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="text-blue-400">import</div> <div class="inline text-white">snek</div>
-                        <br><br>
-                        <div class="text-slate-400"># Define your snek v2.2 code</div>
-                        <div class="text-white">snek_code = """</div>
-                        <div class="text-[#00D26A] pl-4">let names be list [string "Alice", string "Bob"]</div>
-                        <div class="text-[#00D26A] pl-4">call print_names</div>
-                        <div class="text-[#00D26A] pl-4">end;</div>
-                        <div class="text-white">"""</div>
-                        <br>
-                        <div class="text-slate-400"># Run the snek code within the Python host</div>
-                        <div class="text-white">snek.run(snek_code)</div>
                     </div>
                 </div>
             </section>
