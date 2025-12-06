@@ -3,690 +3,639 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snek vs. Python: The Evolution of Code</title>
+    <title>snek vs Python: The Complete Comparison (macOS Style)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Poppins:wght@300;400;600;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
         :root {
-            --color-snek: #10B981; /* Emerald 500 */
-            --color-python: #3B82F6; /* Blue 500 */
-            --color-accent: #F59E0B; /* Amber 500 */
-            --color-dark: #1E293B; /* Slate 800 */
+            --color-snek: #00D26A; /* Vibrant Green Accent */
+            --color-python: #4B8BBE; /* Python Blue */
+            --color-v1: #EF4444; /* Red */
+            --color-v207: #F59E0B; /* Amber */
+            --color-text: #1F2937; /* Dark Gray */
+            --color-bg: #F9FAFB; /* Light System Background */
+            --color-card: #FFFFFF;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #F8FAFC;
-            color: #334155;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            scroll-behavior: smooth;
         }
 
-        h1, h2, h3 {
-            color: var(--color-dark);
+        /* Subtle Mac-like shadow for cards and buttons + Hover Animation */
+        .mac-shadow {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+        .mac-shadow:hover {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 15px 20px -3px rgba(0, 0, 0, 0.08);
+            transform: translateY(-3px);
+            border-color: rgba(0, 210, 106, 0.4); /* Highlight on hover */
         }
 
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* Chart Container Styling - MANDATORY */
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 350px;
-            max-height: 450px;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 400px;
         }
 
+        .code-block {
+            background-color: #E5E7EB; /* Light gray for code */
+            color: #1F2937;
+            font-family: 'SF Mono', 'Courier New', Courier, monospace;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+        }
+
+        .frosted-nav {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Timeline Connector */
         @media (min-width: 768px) {
-            .chart-container {
-                height: 400px;
-            }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
-
-        /* Gradient Text */
-        .text-gradient {
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-image: linear-gradient(to right, #10B981, #3B82F6);
-        }
-
-        /* Process Flow Element (Non-SVG/Mermaid) */
-        .flow-step {
-            position: relative;
-            padding: 1.5rem;
-            border: 2px solid #E2E8F0;
-            transition: all 0.3s;
-        }
-        .flow-step:hover {
-            border-color: #10B981;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
-        }
-        .flow-step::before {
-            content: attr(data-step);
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 30px;
-            background-color: #3B82F6;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-family: 'Poppins', sans-serif;
-        }
-        @media (min-width: 1024px) {
-            .flow-step::after {
+            .timeline-connect::after {
                 content: '';
                 position: absolute;
                 top: 50%;
-                right: -3rem; /* Spacing between cards */
-                width: 3rem;
+                left: 100%;
+                width: 100%;
                 height: 2px;
-                background: repeating-linear-gradient(90deg, #94A3B8, #94A3B8 6px, transparent 6px, transparent 12px);
-                transform: translateY(-50%);
+                background-color: #D1D5DB;
                 z-index: -1;
             }
-            .flow-step:last-child::after {
+            .timeline-connect:last-child::after {
                 display: none;
             }
         }
+        
+        /* --- Animated Background Chase --- */
+        .chase-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%; 
+            height: 100%;
+            overflow: hidden;
+            z-index: 0; /* Behind main content */
+            opacity: 0.15;
+            filter: blur(4px); /* ~40% blurry effect */
+            pointer-events: none;
+            animation: background-pan 60s linear infinite; /* Slow horizontal background pan */
+        }
+
+        @keyframes background-pan {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .snek-icon, .python-icon {
+            position: absolute;
+            font-size: 8rem;
+            transition: transform 0.5s ease;
+            text-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Using a placeholder character for Python since the emoji is less distinct */
+        .python-icon::before {
+            content: 'P';
+            font-size: 8rem;
+            font-weight: 900;
+            font-family: 'Inter', sans-serif;
+            color: var(--color-python);
+        }
+
+        .snek-icon {
+            color: var(--color-snek);
+            animation: snek-chase 30s linear infinite;
+        }
+
+        .python-icon {
+            animation: python-flee 30s linear infinite;
+        }
+
+        /* Keyframes for the chase simulation */
+        @keyframes snek-chase {
+            0% { top: 10%; left: 0%; transform: rotate(10deg); }
+            25% { top: 50%; left: 40%; transform: rotate(45deg); }
+            50% { top: 90%; left: 70%; transform: rotate(180deg); }
+            75% { top: 30%; left: 95%; transform: rotate(270deg); }
+            100% { top: 10%; left: 0%; transform: rotate(370deg); }
+        }
+
+        @keyframes python-flee {
+            0% { top: 5%; left: 10%; transform: rotate(-10deg); }
+            25% { top: 60%; left: 50%; transform: rotate(-45deg); }
+            50% { top: 80%; left: 80%; transform: rotate(-180deg); }
+            75% { top: 20%; left: 85%; transform: rotate(-270deg); }
+            100% { top: 5%; left: 10%; transform: rotate(-370deg); }
+        }
+
+        /* Ensure main content is visible above the background */
+        .main-content {
+            position: relative;
+            z-index: 10;
+        }
     </style>
-    <!-- 
-    Palette Name: "Energetic Growth"
-    Snek (Primary): #10B981 (Emerald Green)
-    Python (Secondary): #3B82F6 (Royal Blue)
-    Accent: #F59E0B (Vibrant Amber)
-    Background: #F8FAFC (Clean Slate)
-    
-    Narrative Plan:
-    1. Introduction/Hook (Existing)
-    2. Philosophy & Design (Python vs Snek) -> Radar Chart
-    3. Snek Version History & Evolution (v2.0-1 vs v2.0-7) -> Text Comparison + Stacked Bar Chart (Feature Completion) (NEW)
-    4. I/O Evolution (Python vs Snek) -> Bar Chart (Verbosity) (MOVED)
-    5. Logic & Syntax (Python vs Snek) -> Code Blocks + Cognitive Load Chart (MOVED)
-    6. Installation Guide (Snek Implementation) -> HTML/CSS Process Flow Diagram (UPDATED)
-    -->
 </head>
 <body class="antialiased">
 
-    <!-- Header / Hero -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 flex items-center justify-center text-3xl">🐍</div>
-                <h1 class="text-2xl font-bold tracking-tight text-slate-800">Snek <span class="text-slate-400">vs</span> Python</h1>
-            </div>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#philosophy" class="text-slate-600 hover:text-emerald-600 font-medium transition">Philosophy</a>
-                <a href="#snek-evolution-detail" class="text-slate-600 hover:text-emerald-600 font-medium transition">Snek Evolution</a>
-                <a href="#io-evolution" class="text-slate-600 hover:text-emerald-600 font-medium transition">I/O Revolution</a>
-                <a href="#installation-guide" class="text-slate-600 hover:text-emerald-600 font-medium transition">Installation</a>
-            </nav>
-        </div>
-    </header>
+    <!-- Animated Background Layer -->
+    <div class="chase-background">
+        <span class="snek-icon">🐍</span>
+        <span class="python-icon" aria-label="Python P"></span>
+        <span class="snek-icon" style="top: 70%; left: 20%; font-size: 6rem; animation-delay: -10s;">🐍</span>
+        <span class="python-icon" style="top: 25%; left: 60%; font-size: 6rem; animation-delay: -15s;" aria-label="Python P"></span>
+    </div>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-24">
-
-        <!-- Intro -->
-        <section class="text-center max-w-4xl mx-auto">
-            <h2 class="text-4xl md:text-6xl font-extrabold mb-6"><span class="text-gradient">The Evolution of Conversational Code</span></h2>
-            <p class="text-xl text-slate-600 leading-relaxed">
-                Snek is an interpreted, narrative-focused language built directly on the Python core, offering a bridge for beginners to interact with programming logic using plain English. This infographic analyzes its journey from the simple 1.0 concept to the robust v2.0-7 release, and how it challenges the functional dominance of Python 3.x.
-            </p>
-        </section>
-
-        <!-- SECTION 1: Philosophy & Design -->
-        <section id="philosophy" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-                <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-emerald-600 uppercase bg-emerald-100 rounded-full">
-                    Core Comparison
+    <div class="main-content">
+        <!-- Navigation (Frosted look) -->
+        <nav class="sticky top-0 z-50 frosted-nav">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-3xl">🐍</span>
+                    <span class="font-bold text-2xl tracking-tight text-[#1F2937]">snek Analysis</span>
                 </div>
-                <h3 class="text-3xl font-extrabold text-slate-800 mb-6">Designed for Different Worlds</h3>
-                <p class="text-slate-600 mb-6 text-lg">
-                    Python is the workhorse, optimizing for industrial scale, computational efficiency, and object-oriented complexity. Snek v2.0-7 is optimized for teaching, narrative design, and reducing the syntax barrier to entry, focusing on a clean, script-like experience.
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-500">
+                    <a href="#overview" class="hover:text-current transition hover:text-[#00D26A]">Overview</a>
+                    <a href="#evolution" class="hover:text-current transition hover:text-[#00D26A]">Evolution Flow</a>
+                    <a href="#syntax" class="hover:text-current transition hover:text-[#00D26A]">Syntax Deep Dive</a>
+                    <a href="#metrics" class="hover:text-current transition hover:text-[#00D26A]">Metrics</a>
+                    <a href="#install" class="hover:text-current transition hover:text-[#00D26A]">Installation</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header id="overview" class="py-24 px-4 text-center bg-white/50 backdrop-blur-sm relative z-10">
+            <div class="max-w-5xl mx-auto">
+                <h1 class="text-5xl md:text-6xl font-extrabold mb-8 leading-tight tracking-tight">
+                    snek Language Report
+                    <br>
+                    <span class="text-[#00D26A]">v2.2 vs. Python 3.14</span>
+                </h1>
+                <p class="text-lg text-gray-700 mb-12 max-w-3xl mx-auto leading-relaxed">
+                    A definitive comparative analysis charting the philosophical and technical journey of the snek language from its unstructured prototype to its structured, conversational final specification, emphasizing developer cognitive load.
                 </p>
-                <ul class="space-y-4">
-                    <li class="flex items-start">
-                        <span class="flex-shrink-0 w-6 h-6 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mr-3">P</span>
-                        <span class="text-slate-700"><strong>Python:</strong> Focus on efficiency, versatility, and strict syntax rules (indentation, colons).</span>
-                    </li>
-                    <li class="flex items-start">
-                        <span class="flex-shrink-0 w-6 h-6 text-3xl flex items-center justify-center font-bold mr-3">🐍</span>
-                        <span class="text-slate-700"><strong>Snek:</strong> Focus on conversational flow, animated feedback, and English-like keywords.</span>
-                    </li>
-                </ul>
-            </div>
-            
-            <!-- Visualization: Radar Chart -->
-            <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
-                <h4 class="text-lg font-semibold text-center mb-4 text-slate-700">Language Profile Analysis</h4>
-                <div class="chart-container">
-                    <canvas id="philosophyChart"></canvas>
-                </div>
-                <p class="text-center text-sm text-slate-400 mt-4">This radar chart visually confirms Snek's priority shift toward user experience factors over Python's raw performance focus.</p>
-            </div>
-        </section>
-
-        <!-- SECTION 2 (NEW): Snek Version History & Evolution (Previously Section 3) -->
-        <section id="snek-evolution-detail">
-            <div class="max-w-4xl mx-auto text-center mb-12">
-                <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-amber-600 uppercase bg-amber-100 rounded-full">
-                    Snek Internal Growth
-                </div>
-                <h3 class="text-3xl font-extrabold text-slate-800 mb-4">Snek v2.0-1: Simple Prototype to v2.0-7: Robust Interpreter</h3>
-                <p class="text-slate-600">
-                    While Snek v2.0-1 provided basic variable and logic handling, v2.0-7 represents a stabilization and feature completion milestone. The later version introduced conversational logic operators and crucial error recovery to handle unexpected input gracefully.
-                </p>
-            </div>
-
-            <!-- Syntax Comparison Grid (v2.0-1 vs v2.0-7) -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <!-- V2.0-1 Card -->
-                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-amber-500">
-                    <h4 class="text-xl font-bold text-amber-600 mb-2">Snek v2.0-1 (Prototype)</h4>
-                    <p class="text-sm text-slate-500 mb-4 uppercase tracking-wide font-bold">Simple Logic & Assignment</p>
-                    <div class="bg-slate-800 rounded-lg p-4 font-mono text-sm text-amber-200 overflow-x-auto h-32">
-                        <code class="block">
-                            <span class="text-purple-400">let</span> score <span class="text-purple-400">be</span> 0<br>
-                            <span class="text-purple-400">if</span> score <span class="text-yellow-300">is over</span> 10 <span class="text-purple-400">then</span><br>
-                            &nbsp;&nbsp;print "Win"<br>
-                            <span class="text-purple-400">end;</span>
-                        </code>
-                    </div>
-                    <ul class="text-sm text-slate-600 space-y-2 mt-4">
-                        <li>Basic keywords (e.g., `is over`).</li>
-                        <li>Limited variable assignment.</li>
-                        <li>No custom output styling.</li>
-                    </ul>
-                </div>
                 
-                <!-- Arrow/Divider -->
-                <div class="flex items-center justify-center text-4xl text-slate-400 hidden md:block">
-                    &rarr;
-                </div>
-                
-                <!-- V2.0-7 Card -->
-                <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-emerald-500 md:col-span-1">
-                    <h4 class="text-xl font-bold text-emerald-600 mb-2">Snek v2.0-7 (Stable)</h4>
-                    <p class="text-sm text-slate-500 mb-4 uppercase tracking-wide font-bold">Full Conversational Capability</p>
-                    <div class="bg-slate-800 rounded-lg p-4 font-mono text-sm text-emerald-200 overflow-x-auto h-32">
-                        <code class="block">
-                            <span class="text-purple-400">let</span> score <span class="text-purple-400">be</span> <span class="text-yellow-300">number</span> 0<br>
-                            <span class="text-purple-400">if</span> score <span class="text-yellow-300">is greater than</span> 10 <span class="text-purple-400">then</span><br>
-                            &nbsp;&nbsp;<span class="text-purple-400">print,color=green</span> "Victory"<br>
-                            <span class="text-purple-400">end;</span>
-                        </code>
-                    </div>
-                    <ul class="text-sm text-slate-600 space-y-2 mt-4">
-                        <li>Full, multi-word operators (e.g., `is greater than`).</li>
-                        <li>Type-specific assignment (`number`).</li>
-                        <li>Native support for custom text color.</li>
-                    </ul>
+                <!-- Version Badges -->
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="px-4 py-2 bg-red-50 text-red-600 rounded-full font-medium text-sm mac-shadow">snek v1.0 (Prototype)</span>
+                    <span class="px-4 py-2 bg-yellow-50 text-yellow-600 rounded-full font-medium text-sm mac-shadow">snek v2.0-7 (Transitional)</span>
+                    <span class="px-4 py-2 bg-[#00D26A]/10 text-[#00D26A] rounded-full font-bold text-sm mac-shadow">snek v2.2 (Final Spec)</span>
+                    <span class="px-4 py-2 bg-blue-50 text-[#4B8BBE] rounded-full font-medium text-sm mac-shadow">Python 3.14 (Benchmark)</span>
                 </div>
             </div>
+        </header>
 
-            <!-- Visualization: Stacked Bar Chart (Feature Completion) -->
-            <div class="bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
-                <h4 class="text-lg font-semibold text-center mb-6 text-slate-700">Feature Completion Status by Version</h4>
-                <div class="chart-container" style="height: 300px;">
-                    <canvas id="snekEvolutionChart"></canvas>
-                </div>
-                <p class="text-center text-sm text-slate-400 mt-4">The v2.0-7 release finished crucial features like complex error recovery and enabling custom color text, which were absent or incomplete in v2.0-1.</p>
-            </div>
-        </section>
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 pb-24 relative z-10">
 
-
-        <!-- SECTION 3: I/O Evolution (Now Section 4) -->
-        <section id="io-evolution" class="bg-slate-50 rounded-3xl p-8 md:p-12">
-            <div class="max-w-4xl mx-auto text-center mb-12">
-                <h3 class="text-3xl font-extrabold text-slate-800 mb-4">The Input/Output Revolution</h3>
-                <p class="text-slate-600">
-                    Snek v2.0-7 elevates terminal I/O from a utility to a feature. It includes native support for text animation (typing effects) and automatic type coercion, drastically reducing boilerplate code compared to a functionally equivalent Python implementation.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Python Card -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-blue-500 relative">
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-blue-600 mb-2">Python 3.x Approach</h4>
-                        <p class="text-sm text-slate-500 mb-4 uppercase tracking-wide font-bold">Static & Manual</p>
-                        
-                        <div class="bg-slate-800 rounded-lg p-4 mb-4 font-mono text-sm text-blue-200 overflow-x-auto">
-                            <span class="text-pink-400">import</span> time<br>
-                            <span class="text-pink-400">def</span> <span class="text-yellow-300">anim_print</span>(text):<br>
-                            &nbsp;&nbsp;<span class="text-pink-400">for</span> c <span class="text-pink-400">in</span> text:<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;print(c, end="", flush=True)<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;time.sleep(0.05)<br>
-                            <br>
-                            anim_print(<span class="text-green-300">f"Hello {name}"</span>)
-                        </div>
-                        
-                        <ul class="text-sm text-slate-600 space-y-2">
-                            <li class="flex items-center"><span class="text-red-500 mr-2">✖</span> Requires library imports for timing.</li>
-                            <li class="flex items-center"><span class="text-red-500 mr-2">✖</span> Manual loop required for animation.</li>
-                            <li class="flex items-center"><span class="text-red-500 mr-2">✖</span> Input always returns string, requiring manual casting.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Snek Card -->
-                <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-emerald-500 relative">
-                    <div class="p-6">
-                        <h4 class="text-xl font-bold text-emerald-600 mb-2">Snek v2.0-7 Approach</h4>
-                        <p class="text-sm text-slate-500 mb-4 uppercase tracking-wide font-bold">Dynamic & Native</p>
-                        
-                        <div class="bg-slate-800 rounded-lg p-4 mb-4 font-mono text-sm text-emerald-200 overflow-x-auto">
-                            <span class="text-purple-400">anim,print</span> Hello $name<br>
-                            <span class="text-purple-400">score.input</span> "Enter points"<br>
-                            <span class="text-purple-400">add</span> 5 <span class="text-purple-400">to</span> score
-                        </div>
-                        
-                        <ul class="text-sm text-slate-600 space-y-2">
-                            <li class="flex items-center"><span class="text-emerald-500 mr-2">✔</span> Zero boilerplate for animation.</li>
-                            <li class="flex items-center"><span class="text-emerald-500 mr-2">✔</span> Built-in type coloring and dynamic formatting.</li>
-                            <li class="flex items-center"><span class="text-emerald-500 mr-2">✔</span> Automatic numeric type detection on input.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chart: Code Verbosity Comparison -->
-            <div class="mt-12 bg-white p-6 rounded-xl shadow-lg border border-slate-100">
-                <h4 class="text-lg font-semibold text-center mb-6 text-slate-700">Code Verbosity: Characters to Achieve Animated Output</h4>
-                <div class="chart-container" style="height: 250px;">
-                    <canvas id="verbosityChart"></canvas>
-                </div>
-                <p class="text-center text-sm text-slate-400 mt-4">The difference in character count for "Animated Print Loop" highlights Snek's efficiency gain by internalizing I/O functions.</p>
-            </div>
-        </section>
-        
-
-        <!-- SECTION 4: Logic & Syntax (Now Section 5) -->
-        <section id="logic-syntax">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                
-                <!-- Text Content -->
-                <div class="flex flex-col justify-center">
-                    <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold tracking-wider text-blue-600 uppercase bg-blue-100 rounded-full">
-                        Logic & Data
-                    </div>
-                    <h3 class="text-3xl font-extrabold text-slate-800 mb-6">Natural Language Logic</h3>
-                    <p class="text-slate-600 mb-6 text-lg">
-                        Snek allows valid English sentences to form programming logic, utilizing natural language operators like <code class="bg-white px-1 rounded text-emerald-600 font-mono">is equal to</code> or <code class="bg-white px-1 rounded text-emerald-600 font-mono">is greater than</code>. This abstraction drastically reduces the cognitive load associated with symbolic syntax.
-                    </p>
+            <!-- 1. PHILOSOPHY COMPARISON (Radar Chart) -->
+            <section class="pt-16">
+                <h2 class="text-3xl font-bold mb-12 text-center text-[#1F2937]">Design Philosophy: Narrative vs. Efficiency</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     
-                    <div class="space-y-6">
-                        <div class="p-4 bg-emerald-50 rounded-lg border border-emerald-100">
-                            <h5 class="font-bold text-emerald-800 mb-2">Explicitness over Implicitness</h5>
-                            <p class="text-sm text-slate-600">Blocks are explicitly closed with <code class="bg-white px-1 rounded text-emerald-600 font-mono">end;</code>, which prevents the frustrating indentation errors common in Python development environments.</p>
-                        </div>
-                        <div class="p-4 bg-amber-50 rounded-lg border border-amber-100">
-                            <h5 class="font-bold text-amber-800 mb-2">Conversational List Management</h5>
-                            <p class="text-sm text-slate-600">Instead of object methods, Snek uses commands like <code class="bg-white px-1 rounded text-amber-600 font-mono">add X to list Y</code>, making the code's intent instantly clear to a non-programmer.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Syntax Comparison Grid -->
-                <div class="grid grid-cols-1 gap-4">
-                    <!-- Comparison Row 1 -->
-                    <div class="bg-slate-800 rounded-lg p-1 grid grid-cols-2 gap-1">
-                        <div class="bg-slate-900 p-4 rounded-l-lg">
-                            <div class="text-xs text-blue-400 font-bold mb-2 uppercase">Python Logic</div>
-                            <code class="text-sm font-mono text-slate-300">
-                                <span class="text-pink-400">if</span> x > 10 <span class="text-pink-400">and</span> y == <span class="text-green-300">"ready"</span>:<br>
-                                &nbsp;&nbsp;print(<span class="text-green-300">"Go"</span>)
-                            </code>
-                        </div>
-                        <div class="bg-slate-900 p-4 rounded-r-lg border-l border-slate-700">
-                            <div class="text-xs text-emerald-400 font-bold mb-2 uppercase">Snek Logic</div>
-                            <code class="text-sm font-mono text-slate-300">
-                                <span class="text-purple-400">if</span> x <span class="text-yellow-300">is greater than</span> 10 <span class="text-purple-400">and</span> y <span class="text-yellow-300">equals</span> "ready" <span class="text-purple-400">then</span><br>
-                                &nbsp;&nbsp;print Go<br>
-                                <span class="text-purple-400">end;</span>
-                            </code>
+                    <div class="bg-white p-8 rounded-3xl mac-shadow border border-gray-100">
+                        <h3 class="text-xl font-bold mb-6 text-center text-[#1F2937]">Metric Distribution Radar</h3>
+                        <div class="chart-container">
+                            <canvas id="radarChart"></canvas>
                         </div>
                     </div>
 
-                    <!-- Comparison Row 2 -->
-                    <div class="bg-slate-800 rounded-lg p-1 grid grid-cols-2 gap-1">
-                        <div class="bg-slate-900 p-4 rounded-l-lg">
-                            <div class="text-xs text-blue-400 font-bold mb-2 uppercase">Python List</div>
-                            <code class="text-sm font-mono text-slate-300">
-                                inventory.<span class="text-blue-300">append</span>(<span class="text-green-300">"sword"</span>)<br>
-                                item = inventory[0]
-                            </code>
-                        </div>
-                        <div class="bg-slate-900 p-4 rounded-r-lg border-l border-slate-700">
-                            <div class="text-xs text-emerald-400 font-bold mb-2 uppercase">Snek List</div>
-                            <code class="text-sm font-mono text-slate-300">
-                                <span class="text-purple-400">add</span> "sword" <span class="text-purple-400">to list</span> inventory<br>
-                                item = <span class="text-purple-400">get 1st from list</span> inventory
-                            </code>
+                    <div class="p-6 bg-gray-50 rounded-xl mac-shadow border border-gray-200">
+                        <h3 class="text-2xl font-semibold mb-4 text-[#1F2937] border-l-4 border-[#00D26A] pl-4">The Conversational Mandate</h3>
+                        <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                            The core difference lies in the balance of <strong class="text-[#00D26A]">Narrative Flow</strong> (snek) and <strong class="text-[#4B8BBE]">Raw Power</strong> (Python). Python 3.14 sacrifices conversational readability for concise, symbolic efficiency, relying on terse operators and implied structure like indentation.
+                        </p>
+                        <p class="text-gray-600 text-lg leading-relaxed">
+                            snek v2.2, by contrast, prioritizes low cognitive overhead for new users through explicit, English-like constructs (`is greater than`, `end;`). This focus makes the final v2.2 specification exceptionally easy to read, but naturally limits its performance ceiling compared to the C-based Python VM, making it ideal for scripting and educational use.
+                        </p>
+                        <div class="mt-6 p-4 bg-white rounded-lg border border-gray-100">
+                            <p class="text-sm font-medium text-gray-700">⭐ Key Takeaway: snek v2.2 achieves maximum <strong>Simplicity</strong> and <strong>Narrative Flow</strong>, while Python 3.14 achieves maximum <strong>Raw Power</strong> and <strong>Scalability.</strong></p>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Cognitive Load Chart -->
-            <div class="mt-12 bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
-                <h4 class="text-lg font-semibold text-center mb-6 text-slate-700">Data Structure Syntax Complexity (Cognitive Load Score)</h4>
-                <div class="chart-container" style="height: 350px;">
-                    <canvas id="listChart"></canvas>
+            </section>
+
+            <!-- 2. EVOLUTION TIMELINE (Structured HTML/CSS) -->
+            <section id="evolution">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl font-bold text-[#1F2937] mb-3">Structural Evolution Flow</h2>
+                    <p class="text-xl text-gray-500">How snek moved from brittle GOTO jumps to defined Subroutines.</p>
                 </div>
-                <p class="text-center text-sm text-slate-400 mt-4">The cognitive load score reflects the effort needed to recall or look up the method name versus using a simple, declarative sentence.</p>
-            </div>
-        </section>
-        
-        <!-- SECTION 5: Installation Guide (UPDATED) -->
-        <section id="installation-guide" class="bg-slate-50 rounded-3xl p-8 md:p-12">
-            <div class="max-w-4xl mx-auto text-center mb-12">
-                <h3 class="text-3xl font-extrabold text-slate-800 mb-4">Embedded Integration: The Snek Drop-in Method</h3>
-                <p class="text-slate-600">
-                    Snek is designed to co-exist directly within your Python projects. It functions as a library, eliminating the need for separate installation environments or OS-level commands. This method allows you to execute Snek code blocks from within standard Python scripts.
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- V1 Card -->
+                    <div class="bg-white p-6 rounded-3xl mac-shadow border-t-4 border-red-400 relative timeline-connect">
+                        <h3 class="text-xl font-bold text-red-600 mb-2">snek v1.0</h3>
+                        <p class="text-gray-500 text-sm mb-4">Unstructured PoC</p>
+                        <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                            <li><strong class="font-semibold">Flow:</strong> Pure `goto` and `label` for flow control.</li>
+                            <li><strong class="font-semibold">Data:</strong> Scalar variables and simple numeric types only.</li>
+                            <li><strong class="font-semibold">Risk:</strong> High maintenance complexity; spaghetti code prone.</li>
+                        </ul>
+                    </div>
+
+                    <!-- V2.0-7 Card -->
+                    <div class="bg-white p-6 rounded-3xl mac-shadow border-t-4 border-yellow-400 relative timeline-connect">
+                        <h3 class="text-xl font-bold text-yellow-600 mt-2 mb-2">snek v2.0-7</h3>
+                        <div class="text-xs font-medium text-gray-400 mb-4">Intro to Blocks & Loops</div>
+                        <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                            <li><strong class="font-semibold">Flow:</strong> Introduced basic `do...end` loop structures.</li>
+                            <li><strong class="font-semibold">Deficit:</strong> Still lacked Lists or formal Function definitions.</li>
+                            <li><strong class="font-semibold">Syntax:</strong> Conversational operators like `is greater than` emerge.</li>
+                        </ul>
+                    </div>
+
+                    <!-- V2.2 Card (Highlight) -->
+                    <div class="bg-white p-6 rounded-3xl shadow-xl border-t-4 border-[#00D26A] transform scale-105 relative timeline-connect ring-2 ring-[#00D26A]/20">
+                        <h3 class="text-xl font-bold text-[#00D26A] mt-2 mb-2">snek v2.2</h3>
+                        <p class="text-[#00D26A] text-sm font-bold mb-4">Complete & Structured</p>
+                        <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside font-medium">
+                            <li><strong class="font-semibold">Flow:</strong> Full `define` and `call` support for structured subroutines.</li>
+                            <li><strong class="font-semibold">Data:</strong> Native List and advanced data structure support added.</li>
+                            <li><strong class="font-semibold">Standard:</strong> Unified `end;` statement for clear block termination.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Python Card -->
+                    <div class="bg-white p-6 rounded-3xl mac-shadow border-t-4 border-[#4B8BBE]">
+                        <h3 class="text-xl font-bold text-[#4B8BBE] mt-2 mb-2">Python 3.14</h3>
+                        <p class="text-gray-500 text-sm mb-4">The Modern Standard</p>
+                        <ul class="text-sm text-gray-600 space-y-2 list-disc list-inside">
+                            <li><strong class="font-semibold">Flow:</strong> Full Classes, Modules, and Functions system.</li>
+                            <li><strong class="font-semibold">Data:</strong> Full primitive and complex structure support.</li>
+                            <li><strong class="font-semibold">Model:</strong> CPython VM (Bytecode) for high performance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. DETAILED SYNTAX COMPARISON (Code Examples) -->
+            <section id="syntax" class="bg-white rounded-3xl p-10 mac-shadow border border-gray-100">
+                <h2 class="text-3xl font-bold mb-10 text-center text-[#1F2937]">Syntax Deep Dive: Looping and Control</h2>
+                <p class="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
+                    The implementation of a simple counting loop showcases the primary syntactical differences, particularly in flow control and block definition. Note the clear, explicit language of snek v2.2 versus the terse, symbolic nature of Python.
                 </p>
-            </div>
 
-            <!-- Process Flow Diagram (HTML/CSS ONLY) - UPDATED STEPS -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-0 relative">
-                
-                <div class="flow-step bg-white rounded-xl shadow-lg" data-step="1">
-                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Obtain Snek.py</h5>
-                    <p class="text-sm text-slate-600">Download the core interpreter file, <code class="font-mono">snek.py</code>, from the official source (or copy it locally).</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:grid-cols-4">
+                    <!-- V1 Example -->
+                    <div class="bg-gray-50 p-4 rounded-xl border border-red-200 hover:border-red-400 transition duration-300">
+                        <h4 class="text-red-600 font-bold mb-2 text-sm">snek v1.0 (GOTO)</h4>
+                        <pre class="bg-gray-800 text-red-100 p-3 rounded-lg text-xs overflow-x-auto"><code>let count be 0
+label start
+if count > 5 goto finish
+print count
+let count = count + 1
+goto start</code></pre>
+                    </div>
+
+                    <!-- V2.0-7 Example -->
+                    <div class="bg-gray-50 p-4 rounded-xl border border-yellow-200 hover:border-yellow-400 transition duration-300">
+                        <h4 class="text-yellow-600 font-bold mb-2 text-sm">snek v2.0-7 (Basic Block)</h4>
+                        <pre class="bg-gray-800 text-yellow-100 p-3 rounded-lg text-xs overflow-x-auto"><code>let count be number 0
+repeat
+  print count
+  set count = count + 1
+until count is greater than 5</code></pre>
+                    </div>
+
+                    <!-- V2.2 Example (Highlight) -->
+                    <div class="bg-gray-100 p-4 rounded-xl border border-[#00D26A] ring-2 ring-[#00D26A]/20 hover:ring-[#00D26A]/80 transition duration-300">
+                        <h4 class="text-[#00D26A] font-bold mb-2 text-sm">snek v2.2 (Conversational Block)</h4>
+                        <pre class="bg-gray-800 text-[#00D26A] p-3 rounded-lg text-xs overflow-x-auto"><code>let count be number 0
+while count is less than 5 do
+  print count
+  set count = count + 1
+end;
+end;</code></pre>
+                    </div>
+
+                    <!-- Python Example -->
+                    <div class="bg-gray-50 p-4 rounded-xl border border-blue-200 hover:border-blue-400 transition duration-300">
+                        <h4 class="text-[#4B8BBE] font-bold mb-2 text-sm">Python 3.14 (Symbolic)</h4>
+                        <pre class="bg-gray-800 text-blue-200 p-3 rounded-lg text-xs overflow-x-auto"><code>count = 0
+while count < 5:
+    print(count)
+    count += 1
+# Indentation based</code></pre>
+                    </div>
                 </div>
+            </section>
 
-                <div class="flow-step bg-white rounded-xl shadow-lg lg:ml-12" data-step="2">
-                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Place in Project Root</h5>
-                    <p class="text-sm text-slate-600">Place <code class="font-mono">snek.py</code> directly into the folder containing your primary Python scripts.</p>
+            <!-- 4. FEATURE MATRIX HEATMAP (Plotly) -->
+            <section id="metrics">
+                <h2 class="text-3xl font-bold mb-12 text-center text-[#1F2937]">Feature Saturation & Parity</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    
+                    <div class="lg:col-span-1 p-6 bg-white rounded-3xl mac-shadow border border-gray-100">
+                        <h3 class="text-xl font-semibold mb-4 text-[#1F2937] border-l-4 border-[#4B8BBE] pl-4">Key Feature Comparison</h3>
+                        <p class="text-gray-600 mb-6 text-sm">
+                            This matrix highlights native support for critical programming constructs. The scores reflect completeness (100% saturation) or a philosophical difference (e.g., Unified Exit).
+                        </p>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
+                                <strong class="text-[#00D26A]">snek v2.2</strong> achieves 100% parity with Python on <strong class="font-semibold">Native Lists</strong> and <strong class="font-semibold">Structured Subroutines</strong>.
+                            </div>
+                            <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
+                                <strong class="text-[#4B8BBE]">Python 3.14</strong> scores low in <strong class="font-semibold">Unified Exit</strong> and <strong class="font-semibold">Explicit Typing</strong> because its design favors implicit, symbolic, or runtime-based equivalents.
+                            </div>
+                            <div class="p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
+                                The original <strong class="text-red-600">snek v1</strong> was critically deficient, lacking any form of list structure or block scoping.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 bg-white p-6 rounded-3xl mac-shadow border border-gray-100">
+                        <div id="heatmap" style="width:100%;height:450px;"></div>
+                    </div>
                 </div>
-                
-                <div class="flow-step bg-white rounded-xl shadow-lg lg:ml-12" data-step="3">
-                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Import into Python</h5>
-                    <p class="text-sm text-slate-600">Start your Python script with a simple import statement.</p>
-                    <code class="block mt-3 p-2 bg-slate-800 text-emerald-300 rounded text-xs font-mono">
-                        <span class="text-pink-400">import</span> snek
-                    </code>
+            </section>
+
+            <!-- 5. CAPABILITY BAR CHART -->
+            <section>
+                <div class="bg-white p-8 rounded-3xl mac-shadow border border-gray-100 max-w-5xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-[#1F2937]">Performance & Cognitive Trade-offs</h3>
+                    <div class="chart-container">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                    <p class="text-center text-gray-500 text-sm mt-6">Scoring is based on implementation maturity and ease of use (10 = highest).</p>
                 </div>
+            </section>
 
-                <div class="flow-step bg-white rounded-xl shadow-lg lg:ml-12" data-step="4">
-                    <h5 class="text-xl font-bold text-blue-600 mb-2 mt-4">Execute Snek Code</h5>
-                    <p class="text-sm text-slate-600">Use the <code class="font-mono">snek.run()</code> function to execute Snek code directly within your Python script.</p>
-                    <code class="block mt-3 p-2 bg-slate-800 text-emerald-300 rounded text-xs font-mono">
-                        program = <span class="text-green-300">"print Hello"</span><br>
-                        snek.run(program)
-                    </code>
+            <!-- 6. INSTALLATION GUIDE (Embedded Method) -->
+            <section id="install" class="bg-slate-900 text-white rounded-3xl p-12 mac-shadow relative overflow-hidden">
+                <h2 class="text-4xl font-bold mb-8 text-center relative z-10 text-white">Installation: The snek Drop-in Method</h2>
+                <p class="text-center text-slate-400 mb-12 max-w-3xl mx-auto relative z-10">
+                    snek is designed for embedded integration. It requires a Python host environment to run, acting as a language extension rather than a standalone executable like Python 3.14. This simplified setup contributes to its high "Ease of Installation" score.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+                    
+                    <!-- Step List -->
+                    <div class="space-y-8">
+                        <div class="flex gap-4 items-start">
+                            <div class="flex-shrink-0 w-10 h-10 bg-[#00D26A] text-slate-900 rounded-full flex items-center justify-center font-bold text-lg mac-shadow">1</div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Prerequisite Check</h4>
+                                <p class="text-slate-400">Ensure a modern Python 3 interpreter (like 3.14) is installed on your system. This is the mandatory runtime host for snek scripts.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="flex-shrink-0 w-10 h-10 bg-[#4B8BBE] text-white rounded-full flex items-center justify-center font-bold text-lg mac-shadow">2</div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Embed the Interpreter</h4>
+                                <p class="text-slate-400">Place the core <code class="bg-slate-800 px-2 py-1 rounded text-[#00D26A]">snek.py</code> file directly into your Python project directory. No external package manager is required.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="flex-shrink-0 w-10 h-10 bg-white text-slate-900 rounded-full flex items-center justify-center font-bold text-lg mac-shadow">3</div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Execute via snek.run()</h4>
+                                <p class="text-slate-400">Import the file and pass your snek code as a string to the <code class="bg-slate-800 px-2 py-1 rounded text-white">snek.run()</code> function in your main Python script, making integration seamless.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Preview Window -->
+                    <div class="bg-gray-800 rounded-xl border border-slate-700 p-6 font-mono text-sm shadow-2xl">
+                        <div class="flex gap-2 mb-4 border-b border-gray-700 pb-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <span class="ml-auto text-xs text-slate-500">main.py (Host)</span>
+                        </div>
+                        
+                        <div class="text-blue-400">import</div> <div class="inline text-white">snek</div>
+                        <br><br>
+                        <div class="text-slate-400"># Define your snek v2.2 code</div>
+                        <div class="text-white">snek_code = """</div>
+                        <div class="text-[#00D26A] pl-4">let names be list [string "Alice", string "Bob"]</div>
+                        <div class="text-[#00D26A] pl-4">call print_names</div>
+                        <div class="text-[#00D26A] pl-4">end;</div>
+                        <div class="text-white">"""</div>
+                        <br>
+                        <div class="text-slate-400"># Run the snek code within the Python host</div>
+                        <div class="text-white">snek.run(snek_code)</div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-    </main>
+        </main>
 
-    <footer class="bg-slate-800 text-slate-400 py-12 border-t border-slate-700">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="mb-4">Generated based on Snek v2.0-7 Language Specification</p>
-            <div class="flex justify-center space-x-4 text-sm">
-                <span>No SVGs were used.</span>
-                <span>•</span>
-                <span>No Mermaid.js was used.</span>
-            </div>
-        </div>
-    </footer>
+        <footer class="bg-white text-gray-400 py-8 text-center border-t border-gray-200 relative z-10">
+            <p class="text-sm">Infographic created by AI Analysis & Visualization Engine | Inspired by macOS Design Principles.</p>
+        </footer>
+    </div>
 
-    <!-- Chart Logic -->
+    <!-- SCRIPTS (Wrapped in window.onload to fix getContext error) -->
     <script>
-        // --- 1. Label Wrapping Utility (Mandatory) ---
-        function splitLabel(label) {
-            if (typeof label !== 'string') return label;
-            if (label.length <= 16) return label;
-            
-            const words = label.split(' ');
-            const lines = [];
-            let currentLine = words[0];
+        window.onload = function() {
+            // --- Label Wrapping Function (Required) ---
+            function wrapLabel(label) {
+                if (typeof label !== 'string' || label.length <= 16) return label;
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
 
-            for (let i = 1; i < words.length; i++) {
-                if ((currentLine + " " + words[i]).length <= 16) {
-                    currentLine += " " + words[i];
-                } else {
-                    lines.push(currentLine);
-                    currentLine = words[i];
-                }
-            }
-            lines.push(currentLine);
-            return lines;
-        }
-
-        // --- 2. Tooltip Config (Mandatory) ---
-        const commonTooltipOptions = {
-            callbacks: {
-                title: function(tooltipItems) {
-                    const item = tooltipItems[0];
-                    let label = item.chart.data.labels[item.dataIndex];
-                    if (Array.isArray(label)) {
-                        return label.join(' ');
+                for (const word of words) {
+                    if (currentLine.length + word.length + 1 > 16 && currentLine.length > 0) {
+                        lines.push(currentLine.trim());
+                        currentLine = word + ' ';
                     } else {
-                        return label;
+                        currentLine += word + ' ';
                     }
-                },
-                // Custom label callback to show the raw percentage for stacked bar
-                label: function(context) {
-                    let label = context.dataset.label || '';
-                    if (label) {
-                        label += ': ';
-                    }
-                    if (context.raw !== null) {
-                        label += context.raw.toFixed(0) + '%';
-                    }
-                    return label;
                 }
+                if (currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                }
+                return lines;
             }
-        };
 
-        // --- CHART 1: Philosophy Radar Chart ---
-        const ctxRadar = document.getElementById('philosophyChart').getContext('2d');
-        new Chart(ctxRadar, {
-            type: 'radar',
-            data: {
-                labels: ['Narrative Focus', 'Raw Power', 'Beginner Friendliness', 'Boilerplate Setup', 'Visual Output'].map(splitLabel),
-                datasets: [
-                    {
-                        label: 'Python 3.x',
-                        data: [20, 100, 50, 70, 30],
-                        fill: true,
-                        backgroundColor: 'rgba(59, 130, 246, 0.2)', // Blue
-                        borderColor: '#3B82F6',
-                        pointBackgroundColor: '#3B82F6',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#3B82F6'
-                    },
-                    {
-                        label: 'Snek v2.0-7',
-                        data: [100, 40, 95, 10, 90],
-                        fill: true,
-                        backgroundColor: 'rgba(16, 185, 129, 0.2)', // Emerald
-                        borderColor: '#10B981',
-                        pointBackgroundColor: '#10B981',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#10B981'
-                    }
-                ]
-            },
-            options: {
+            const standardChartOptions = {
                 maintainAspectRatio: false,
                 responsive: true,
                 plugins: {
-                    tooltip: commonTooltipOptions,
-                    legend: {
-                        position: 'bottom'
+                    legend: { labels: { color: '#4B5563', font: { family: 'Inter' } } },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join(' ');
+                                } else {
+                                    return label;
+                                }
+                            }
+                        }
                     }
                 },
                 scales: {
                     r: {
-                        angleLines: { color: '#e2e8f0' },
-                        grid: { color: '#e2e8f0' },
-                        pointLabels: {
-                            font: { size: 12, family: "'Poppins', sans-serif", weight: '600' },
-                            color: '#475569'
-                        },
+                        grid: { color: '#E5E7EB' },
+                        angleLines: { color: '#E5E7EB' },
+                        pointLabels: { color: '#334155', font: { size: 12, family: 'Inter' } },
                         suggestedMin: 0,
-                        suggestedMax: 100
+                        suggestedMax: 100,
+                        ticks: { display: false }
                     }
                 }
-            }
-        });
+            };
 
-        // --- CHART 2: Verbosity Bar Chart ---
-        const ctxVerbosity = document.getElementById('verbosityChart').getContext('2d');
-        new Chart(ctxVerbosity, {
-            type: 'bar',
-            indexAxis: 'y',
-            data: {
-                labels: ['Standard Print', 'Animated Print Loop', 'Input with Type Coercion'].map(splitLabel),
-                datasets: [
-                    {
-                        label: 'Python Characters Required',
-                        data: [20, 120, 45], // Est. chars
-                        backgroundColor: '#3B82F6',
-                        borderRadius: 4
-                    },
-                    {
-                        label: 'Snek Characters Required',
-                        data: [15, 25, 20], // Est. chars
-                        backgroundColor: '#10B981',
-                        borderRadius: 4
-                    }
-                ]
-            },
-            options: {
-                maintainAspectRatio: false,
-                responsive: true,
-                plugins: {
-                    tooltip: commonTooltipOptions,
-                    legend: { position: 'bottom' }
-                },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Estimated Character Count' }
-                    }
-                }
-            }
-        });
-        
-        // --- CHART 3: Snek Evolution Stacked Bar Chart (NEW) ---
-        const ctxSnekEvolution = document.getElementById('snekEvolutionChart').getContext('2d');
-        new Chart(ctxSnekEvolution, {
-            type: 'bar',
-            data: {
-                labels: ['Advanced Error Handling', 'Full List/Array Support', 'Custom Color Printing'].map(splitLabel),
-                datasets: [
-                    {
-                        label: 'Snek v2.0-1 Implementation',
-                        data: [30, 60, 0], // Percentage completed in v2.0-1
-                        backgroundColor: 'rgba(16, 185, 129, 0.4)', // Light Emerald
-                        borderRadius: 4
-                    },
-                    {
-                        label: 'Snek v2.0-7 Completion',
-                        data: [70, 40, 100], // Percentage completed between v2.0-1 and v2.0-7
-                        backgroundColor: '#10B981', // Solid Emerald
-                        borderRadius: 4
-                    }
-                ]
-            },
-            options: {
-                maintainAspectRatio: false,
-                responsive: true,
-                plugins: {
-                    tooltip: commonTooltipOptions,
-                    legend: { position: 'top' }
-                },
-                scales: {
-                    x: {
-                        stacked: true,
-                        grid: { display: false }
-                    },
-                    y: {
-                        stacked: true,
-                        beginAtZero: true,
-                        max: 100,
-                        title: { display: true, text: 'Feature Completion (%)' }
-                    }
-                }
-            }
-        });
-
-        // --- CHART 4: List Syntax Complexity (Grouped Bar) ---
-        const ctxList = document.getElementById('listChart').getContext('2d');
-        new Chart(ctxList, {
-            type: 'bar',
-            data: {
-                labels: ['Initialization', 'Adding Items', 'Retrieving by Position', 'Removal by Value'].map(splitLabel),
-                datasets: [
-                    {
-                        label: 'Python (Method Calls)',
-                        data: [3, 2, 2, 2], // Abstract complexity score (1-5)
-                        backgroundColor: '#3B82F6',
-                        borderRadius: 4
-                    },
-                    {
-                        label: 'Snek (Natural Language)',
-                        data: [1, 1, 1, 1], // Lower score = Easier to read/write for non-coders
-                        backgroundColor: '#10B981',
-                        borderRadius: 4
-                    }
-                ]
-            },
-            options: {
-                maintainAspectRatio: false,
-                responsive: true,
-                plugins: {
-                    tooltip: {
-                        ...commonTooltipOptions,
-                        callbacks: {
-                            ...commonTooltipOptions.callbacks,
-                            label: function(context) {
-                                return `Cognitive Load Score: ${context.raw}`;
-                            }
+            // --- 1. RADAR CHART ---
+            const ctxRadar = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctxRadar, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        wrapLabel('Narrative Flow/Readability'),
+                        wrapLabel('Raw Computational Power'),
+                        wrapLabel('Simplicity/Minimalism'),
+                        wrapLabel('Language Safety/Guards'),
+                        wrapLabel('Extensibility/Ecosystem')
+                    ],
+                    datasets: [
+                        {
+                            label: 'Python 3.14',
+                            data: [35, 100, 60, 80, 100],
+                            backgroundColor: 'rgba(75, 139, 190, 0.15)',
+                            borderColor: '#4B8BBE',
+                            pointBackgroundColor: '#4B8BBE',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'snek v2.2',
+                            data: [95, 45, 85, 90, 10],
+                            backgroundColor: 'rgba(0, 210, 106, 0.2)',
+                            borderColor: '#00D26A',
+                            pointBackgroundColor: '#00D26A',
+                            borderWidth: 3
                         }
-                    },
-                    legend: { position: 'top' }
+                    ]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 5,
-                        title: { display: true, text: 'Cognitive Load (Lower is Better)' }
+                options: standardChartOptions
+            });
+
+            // --- 2. HEATMAP (Plotly) ---
+            const categories = ['Native Lists', 'Structured Subs', 'Unified Exit', 'Explicit Typing', 'Conversational Ops'];
+            const versions = ['snek v1', 'snek 2.0-7', 'snek 2.2', 'Python 3.14'];
+            
+            const zValues = [
+                [0, 0, 0, 0.5, 0.2],     // v1 (Partial typing, weak conversational)
+                [0, 0, 0, 1, 0.8],       // 2.0-7 (Explicit typing, strong conversational)
+                [1, 1, 1, 1, 1],         // 2.2 (Full support across the board)
+                [1, 1, 0.2, 0.2, 0.1]    // Python (Implicit/Terser syntax)
+            ];
+
+            const data = [{
+                x: categories,
+                y: versions,
+                z: zValues,
+                type: 'heatmap',
+                colorscale: [
+                    [0, '#F3F4F6'],   // Light Gray (No support)
+                    [0.2, '#9CA3AF'], // Medium Gray (Implicit/Terser)
+                    [0.5, '#FBBF24'], // Amber (Partial)
+                    [1, '#00D26A']    // Vibrant Green (Full/Native)
+                ],
+                showscale: false,
+                xgap: 3,
+                ygap: 3
+            }];
+
+            const layout = {
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: { color: '#374151', family: 'Inter', size: 12 },
+                margin: { t: 20, l: 120, r: 20, b: 40 },
+                height: 450,
+                xaxis: { automargin: true },
+                yaxis: { automargin: true, side: 'left' }
+            };
+
+            Plotly.newPlot('heatmap', data, layout, {displayModeBar: false});
+
+            // --- 3. BAR CHART (Chart.js) ---
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        wrapLabel('Narrative Readability Score'),
+                        wrapLabel('Structural Integrity Score'),
+                        wrapLabel('Ease of Installation (Setup)'),
+                        wrapLabel('Long-Term Scalability')
+                    ],
+                    datasets: [
+                        {
+                            label: 'snek v1',
+                            data: [4, 1, 8, 1],
+                            backgroundColor: '#EF4444',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'snek 2.0-7',
+                            data: [7, 3, 8, 3],
+                            backgroundColor: '#F59E0B',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'snek 2.2',
+                            data: [10, 9, 9, 7],
+                            backgroundColor: '#00D26A',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Python 3.14',
+                            data: [6, 10, 5, 10],
+                            backgroundColor: '#4B8BBE',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    plugins: {
+                        legend: { labels: { color: '#4B5563' } },
+                        tooltip: {
+                            callbacks: {
+                                title: standardChartOptions.plugins.tooltip.callbacks.title
+                            }
+                        },
+                        title: { display: true, text: 'Capability Scoring (0-10)', color: '#6B7280' }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: '#E5E7EB' },
+                            ticks: { color: '#6B7280' },
+                            beginAtZero: true,
+                            max: 10
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#374151', callback: function(value) {
+                                let label = this.getLabelForValue(value);
+                                if (Array.isArray(label)) {
+                                    return label[0] + '...'; 
+                                }
+                                return label;
+                            } }
+                        }
                     }
                 }
-            }
-        });
+            });
+        };
     </script>
 </body>
 </html>
